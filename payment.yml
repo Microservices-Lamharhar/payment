@@ -1,0 +1,60 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-deployment
+  labels:
+    app: payment 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payment
+  template:
+    metadata:
+      labels:
+        app: payment
+    spec:
+      containers:
+      - name: payment
+        image: payment:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8083
+        env:
+        - name: bookingService
+          value: booking-service
+        - name: notificationService
+          value: notification-service
+        - name: userService
+          value: user-service
+        - name: carService
+          value: car-service
+        - name: DB_URL
+          valueFrom:
+              configMapKeyRef:
+                name: postgres-config
+                key: postgres-url
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key : USER_NAME
+        - name: DB_PWD 
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key : PASSWORD
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-service
+spec:
+  selector:
+    app: payment 
+  ports:
+    - protocol: TCP
+      port: 8083
+      targetPort: 8083 
