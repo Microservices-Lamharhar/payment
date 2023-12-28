@@ -1,6 +1,7 @@
 
 
-package com.microservices.payment;
+package com.microservices.payment.repository;
+import com.microservices.payment.model.Payment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

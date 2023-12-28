@@ -1,6 +1,7 @@
-package com.microservices.payment;
+package com.microservices.payment.model;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,7 +15,7 @@ public class Payment {
   private Long id_payment;
   private Long bookingId;
   private double amount;
-  private LocalDateTime paymentTime;
+  private Date paymentTime;
 
   public Long getId_payment() {
     return id_payment;
@@ -40,11 +41,11 @@ public class Payment {
     this.amount = amount;
   }
 
-  public LocalDateTime getPaymentTime() {
+  public Date getPaymentTime() {
     return paymentTime;
   }
 
-  public void setPaymentTime(LocalDateTime paymentTime) {
+  public void setPaymentTime(Date paymentTime) {
     this.paymentTime = paymentTime;
   }
 
